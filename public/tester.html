@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content= "width=device-width, initial-scale=1.0">
+    <title>Medical Specialties Dropdown</title>
+    <style>
+        .dropdown-container {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Select Medical Specialty</h2>
+    <div id="dropdown-container"></div>
+    <p><strong>Selected Path:</strong> <span id="selected-output">None</span></p>
+
+    <script>
+        // Sample nested medical specialties data
+        const medicalSpecialties = {
+            "Primary Care": {
+                "Family Medicine": {
+                    "General Practice": {
+                        "Preventive Medicine": null,
+                        "Chronic Disease Management": null
+                    }
+                },
+                "Internal Medicine": {
+                    "Cardiology": {
+                        "Interventional Cardiology": null,
+                        "Heart Failure Management": null
+                    },
+                    "Gastroenterology": null
+                }
+            },
+            "Surgical Specialties": {
+                "General Surgery": {
+                    "Trauma Surgery": null,
+                    "Minimally Invasive Surgery": null
+                },
+                "Neurosurgery": {
+                    "Spinal Surgery": null,
+                    "Brain Surgery": {
+                        "Tumor Resection": null,
+                        "Aneurysm Repair": null
+                    }
+                }
+            },
+            "Pediatrics": {
+                "Neonatology": null,
+                "Pediatric Cardiology": {
+                    "Congenital Heart Disease": null
+                }
+            }
+        };
+
+        // Recursive function to create dropdowns
+        function createDropdown(parentContainer, data, level = 0, selectedPath = []) {
+            if (!data) return;
+
+            // Create dropdown container
+            const container = document.createElement("div");
+            container.classList.add("dropdown-container");
+            
+            // Create select element
+            const select = document.createElement("select");
+            select.innerHTML = `<option value="">Select an option...</option>`;
+
+            // Populate options
+            Object.keys(data).forEach(key => {
+                const option = document.createElement("option");
+                option.value = key;
+                option.textContent = key;
+                select.appendChild(option);
+            });
+
+            container.appendChild(select);
+            parentContainer.appendChild(container);
+
+            // Event listener to update children dynamically
+            select.addEventListener("change", function () {
+                // Remove all next level dropdowns
+                while (container.nextSibling) {
+                    parentContainer.removeChild(container.nextSibling);
+                }
+
+                // Get selected value
+                const selectedValue = select.value;
+                if (selectedValue) {
+                    selectedPath[level] = selectedValue;
+                    createDropdown(parentContainer, data[selectedValue], level + 1, selectedPath);
+                } else {
+                    selectedPath.length = level; // Remove deeper selections if deselected
+                }
+
+                // Update displayed selection path
+                document.getElementById("selected-output").textContent = selectedPath.join(" > ") || "None";
+            });
+        }
+
+        // Initialize the dropdown menu
+        document.addEventListener("DOMContentLoaded", () => {
+            const container = document.getElementById("dropdown-container");
+            createDropdown(container, medicalSpecialties);
+        });
+    </script>
+
+</body>
+</html>

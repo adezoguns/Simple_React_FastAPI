@@ -11,6 +11,8 @@ import psycopg2
 
 config = dotenv_values(".env")
 
+root_path= os.path.dirname(os.path.realpath(__file__))
+
 def connect_db():
     """
     Establish a connection to the PostgreSQL database.
@@ -34,7 +36,8 @@ def connect_db():
 
 
 def query_db():
-    connection = psycopg2.connect(database=config["SCHEMA"], user=config["USER"], password=config["PASSWORD"], host=config["HOST"], port=config["PORT"])
+    connection = psycopg2.connect(database=config["SCHEMA"], user=config["USER"], 
+                                  password=config["PASSWORD"], host=config["HOST"], port=config["PORT"])
     cursor = connection.cursor()
     cursor.execute("select  from physician limit 10;")
     # Fetch all rows from database
@@ -46,14 +49,6 @@ def query_db():
 
 def query_engine_db(query_text):
     engine = create_engine(f'postgresql://postgres:{config["PASSWORD"]}@{config["HOST"]}:5432/{config["SCHEMA"]}')
-    # select classification, 
-    #                 specialization, 
-    #                 first_name, 
-    #                 last_name, 
-    #                 middle_name, 
-    #                 mailing_address_city, 
-    #                 mailing_address_state 
-    #                 from physician limit 10000;
     data_frame = pd.read_sql( 
         query_text, 
         con=engine)  
@@ -95,7 +90,7 @@ def generate_dict():
     
     #print(result_dict)
 
-    with open("/home/adeola/my-react-app2/webserver/search.json", "w") as f:
+    with open(f"{root_path}/search.json", "w") as f:
         json.dump(result_dict, f)
 
 

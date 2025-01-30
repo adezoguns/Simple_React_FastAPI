@@ -1,54 +1,46 @@
-import { useState } from "react";
+import { useContext } from "react";
+import { DataContext } from "./DataContext";
 
 function DisplayPane() {
-    const [data, setData] = useState([
-        { id: 1, Name: "Ogunleye Adeola", Job: "Engineer", Address: "21 Boleyn Close, Walthamstow, London, UK", selected: false },
-        { id: 2, Name: "Akeem Baba", Job: "Carpenter", Address: "42, Hackney Central", selected: false },
-        { id: 3, Name: "Muniru Atilogun", Job: "Barber", Address: "25 Stoke Newington", selected: false },
-        { id: 4, Name: "Oke Afeez", Job: "Driver", Address: "27 London Bridge", selected: false },
-    ]);
+  const { apiData } = useContext(DataContext); 
 
-    const toggleRowSelection = (id) => {
-        setData(prevData =>
-            prevData.map(item =>
-                item.id === id ? { ...item, selected: !item.selected } : item
-            )
-        );
-    };
+  if (!Array.isArray(apiData)) {
+    return <p>Loading data or no data available...</p>; 
+  }
 
-    return (
-        <div className="pager2">
-            <div>
-                <table>
-                    <caption>Health Database</caption>
-                    <thead>
-                        <tr>
-                            <th scope="col">Select</th>
-                            <th scope="col">ID</th>
-                            <th scope="col">Name</th>
-                            <th scope="col">Job</th>
-                            <th scope="col">Address</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {data.map(item => (
-                            <tr key={item.id} style={{ backgroundColor: item.selected ? '#d3d3d3' : 'transparent' }}>
-                                <td>
-                                    <button onClick={() => toggleRowSelection(item.id)}>
-                                        {item.selected ? "Deselect" : "Select"}
-                                    </button>
-                                </td>
-                                <td>{item.id}</td>
-                                <td>{item.Name}</td>
-                                <td>{item.Job}</td>
-                                <td>{item.Address}</td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    );
+  return (
+    <div className="pager2">
+      <table>
+        <caption>Health Database</caption>
+        <thead>
+          <tr>
+            <th>Select</th>
+            <th>ID</th>
+            <th>Lastname</th>
+            <th>Firstname</th>
+            <th>Classification</th>
+          </tr>
+        </thead>
+        <tbody>
+          {apiData.length > 0 ? (
+            apiData.map((item) => (
+              <tr key={item.id}>
+                <td><input type="checkbox" /></td>
+                <td>{item.id}</td>
+                <td>{item.lastname}</td>
+                <td>{item.firstname}</td>
+                <td>{item.classification}</td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan="5">No data available</td>
+            </tr>
+          )}
+        </tbody>
+      </table>
+    </div>
+  );
 }
 
 export default DisplayPane;

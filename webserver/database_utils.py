@@ -1,5 +1,3 @@
-import os
-import json
 import pandas as pd
 from sqlalchemy import create_engine
 from dotenv import dotenv_values
@@ -47,10 +45,6 @@ class DB_UTILS:
             return df.to_dict('records')
         except Exception as e:
             raise Exception(f"Error: {e}")
-        
-# if __name__=="__main__":
-#     ff=DB_UTILS()
-#     print(ff.get_dict_from_dataframe("select * from physician limit 10;"))
         
 
 

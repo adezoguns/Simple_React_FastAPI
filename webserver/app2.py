@@ -93,14 +93,14 @@ class SearchDBRequest(BaseModel):
 
 @app.post("/api/search_db")
 async def login(request: SearchDBRequest):
-    print(request)
     query_text=f"""select classification, 
                     specialization, 
-                    first_name, 
-                    last_name, 
-                     middle_name, 
-                    mailing_address_city, 
-                    mailing_address_state 
-                    from physician where classification ='{request.parent}' and specialization='{request.child}';"""
+                    first_name as firstname, 
+                    last_name as lastname, 
+                    ---middle_name, 
+                    mailing_address_city as city, 
+                    mailing_address_state as state
+                    from physician where classification ='{request.parent}' and specialization='{request.child}'
+                    limit 10;"""
     result = query_db.get_dict_from_dataframe(query_text)
     return result

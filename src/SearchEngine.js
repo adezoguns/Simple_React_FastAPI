@@ -1,6 +1,6 @@
- // Sample tree structure (Example data)
  import { useState, useContext} from "react";
- import DisplayPane from "./DisplayPane";
+import { DataContext } from "./DataContext";
+
 
 
  const medicalSpecialties = {
@@ -281,9 +281,10 @@
 };
 
   
-function SearchEng() {
+function SearchEng({children}) {
   const [selectedParent, setSelectedParent] = useState("");
   const [selectedChild, setSelectedChild] = useState("");
+  const { setAPIData } = useContext(DataContext); 
   const [error, setError] = useState("");
 
   // Handles Parent Selection
@@ -316,7 +317,14 @@ function SearchEng() {
       });
 
       const result = await response.json();
-      console.log("API Response:", result);
+      console.log(result);
+
+      if (Array.isArray(result)) { 
+        setAPIData(result); 
+      } else {
+        setAPIData([]); 
+      }
+      //console.log("API Response:", result);
 
       if (!response.ok) {
         setError(result.message || "Failed to submit.");
@@ -358,10 +366,14 @@ function SearchEng() {
       )}
 
       {/* Submit Button */}
-      <button onClick={handleSubmit}>Submit</button>
+        <div className="search_submitter">
+          <button onClick={handleSubmit}>Submit</button>
+        </div>
+      
 
       {/* Error Message */}
       {error && <p style={{ color: "red" }}>{error}</p>}
+
     </div>
   );
 }
