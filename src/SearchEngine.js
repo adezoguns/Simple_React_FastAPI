@@ -1,4 +1,4 @@
- import { useState, useContext} from "react";
+ import { useState, useEffect, useContext} from "react";
 import { DataContext } from "./DataContext";
 
 
@@ -284,7 +284,8 @@ import { DataContext } from "./DataContext";
 function SearchEng({children}) {
   const [selectedParent, setSelectedParent] = useState("");
   const [selectedChild, setSelectedChild] = useState("");
-  const { setAPIData } = useContext(DataContext); 
+  const [apiData, setApiData] = useState([]);
+  //const { setAPIData } = useContext(DataContext); 
   const [error, setError] = useState("");
 
   // Handles Parent Selection
@@ -317,12 +318,14 @@ function SearchEng({children}) {
       });
 
       const result = await response.json();
-      console.log(result);
+      //console.log(result);
+      //setApiData(result);
+
 
       if (Array.isArray(result)) { 
-        setAPIData(result); 
+        setApiData(result);
       } else {
-        setAPIData([]); 
+        setApiData([]); 
       }
       //console.log("API Response:", result);
 
@@ -336,6 +339,13 @@ function SearchEng({children}) {
       setError("Error connecting to the server.");
     }
   };
+
+  ///Store data in the localStorage
+    useEffect(() => {
+    localStorage.setItem("apiData", JSON.stringify(apiData));
+    window.dispatchEvent(new Event("storageUpdate")); // Custom event
+  }, [apiData]);
+  
 
   return (
     <div>

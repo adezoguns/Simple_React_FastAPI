@@ -134,6 +134,7 @@ color: plum;
   padding: 3px 3px 4px 3px;
   border-radius: 5px;
   display: inline-block;
+  overflow-y: scroll; 
 }
 
 .h3_color{
@@ -275,7 +276,7 @@ th {
 }
 
 td {
-  /* border: 1px solid black; */
+  border: 1px solid black;
   text-align: center;
 }
 caption{
