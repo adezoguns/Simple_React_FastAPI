@@ -265,29 +265,6 @@ input[type="submit"],input[type="button"],input[type="reset"] {
 caption {
   font-weight: bold;
 }
-table {
-  /*border: 2px solid black;*/
-  width: 100%;
-  height: 100%;
-}
-
-th {
-  border: 1px solid black;
-}
-
-td {
-  border: 1px solid black;
-  text-align: center;
-}
-caption{
-  font-size: large;
-}
-
-
-td:first-child, th:first-child {
-  width: 10px;
-}
-
 
 .search_submitter{
   padding-top: 5px;
@@ -310,8 +287,30 @@ select {
   border: 1px solid #ddd;
 }
 
+th:first-child, td:first-child {
+  width: 50px; /* Adjust based on your preference */
+  text-align: center;
+}
 
 .screen_title{
   color :black;
   font-size: medium;
+}
+
+.pager2 table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.pager2 th, .pager2 td {
+  padding: 10px;
+  border: 1px solid #ddd;
+}
+
+/* Checkbox styling */
+.pager2 input[type="checkbox"] {
+  width: 5px;
+  height: 18px;
+  transform: scale(1.2); /* Slightly larger */
+  cursor: pointer;
 }
