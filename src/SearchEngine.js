@@ -1,6 +1,6 @@
  import { useState, useEffect, useContext} from "react";
 import { DataContext } from "./DataContext";
-
+import { eventBus } from "./emitter";
 
 
  const medicalSpecialties = {
@@ -324,6 +324,8 @@ function SearchEng({children}) {
 
       if (Array.isArray(result)) { 
         setApiData(result);
+        eventBus.emit("reload");
+        localStorage.setItem("apiData", JSON.stringify(result));
       } else {
         setApiData([]); 
       }
@@ -340,11 +342,11 @@ function SearchEng({children}) {
     }
   };
 
-  ///Store data in the localStorage
-    useEffect(() => {
-    localStorage.setItem("apiData", JSON.stringify(apiData));
-    window.dispatchEvent(new Event("storageUpdate")); // Custom event
-  }, [apiData]);
+  // ///Store data in the localStorage
+  //   useEffect(() => {
+  //   localStorage.setItem("apiData", JSON.stringify(apiData));
+  //   window.dispatchEvent(new Event("storageUpdate")); // Custom event
+  // }, [apiData]);
   
 
   return (

@@ -102,7 +102,9 @@ async def login(request: SearchDBRequest):
                     ---middle_name, 
                     mailing_address_city as city, 
                     mailing_address_state as state
-                    from physician where classification ='{request.parent}' and specialization='{request.child}'
+                    from physician 
+                    where classification ='{request.parent}' and specialization='{request.child}'
+                    order by id
                     limit 200;"""
     result = query_db.get_dict_from_dataframe(query_text)
     return result
