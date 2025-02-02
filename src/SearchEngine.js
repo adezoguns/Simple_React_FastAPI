@@ -50,7 +50,7 @@ function SearchEng({children}) {
         eventBus.emit("reload", result);
         //localStorage.setItem("apiData", JSON.stringify(result));
       } else {
-        setApiData([]); 
+        eventBus.emit("reload", []);
       }
       //console.log("API Response:", result);
 
