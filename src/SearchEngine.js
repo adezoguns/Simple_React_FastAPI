@@ -4,7 +4,6 @@ import { eventBus } from "./emitter";
 
 
  
-  
 function SearchEng({children}) {
   const [selectedParent, setSelectedParent] = useState("");
   const [selectedChild, setSelectedChild] = useState("");
@@ -66,12 +65,6 @@ function SearchEng({children}) {
     }
   };
 
-  // ///Store data in the localStorage
-  //   useEffect(() => {
-  //   localStorage.setItem("apiData", JSON.stringify(apiData));
-  //   window.dispatchEvent(new Event("storageUpdate")); // Custom event
-  // }, [apiData]);
-  
 
   return (
     <div>

@@ -311,6 +311,6 @@ th:first-child, td:first-child {
 .pager2 input[type="checkbox"] {
   width: 5px;
   height: 5px;
-  transform: scale(1.0); /* Slightly larger */
+  transform: scale(1.2); /* Slightly larger */
   cursor: pointer;
 }
