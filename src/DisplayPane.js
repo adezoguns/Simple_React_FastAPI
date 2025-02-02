@@ -8,10 +8,11 @@ function DisplayPane({ getRows }) {
   const [selectedItems, setSelectedItems] = useState([]);
 
   useEffect(() => {
-    eventBus.on("reload", () => setItems(JSON.parse(localStorage.getItem("apiData"))));
+    eventBus.on("reload", (data) => {
+      setItems(data);});
   }, []);
 
-  //console.log(items);
+  //console.log(JSON.stringify(items));
   console.log(selectedItems);
 
   // Handle checkbox toggle

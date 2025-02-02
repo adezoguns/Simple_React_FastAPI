@@ -48,8 +48,8 @@ function SearchEng({children}) {
 
       if (Array.isArray(result)) { 
         setApiData(result);
-        eventBus.emit("reload");
-        localStorage.setItem("apiData", JSON.stringify(result));
+        eventBus.emit("reload", result);
+        //localStorage.setItem("apiData", JSON.stringify(result));
       } else {
         setApiData([]); 
       }

@@ -310,7 +310,7 @@ th:first-child, td:first-child {
 /* Checkbox styling */
 .pager2 input[type="checkbox"] {
   width: 5px;
-  height: 18px;
-  transform: scale(1.2); /* Slightly larger */
+  height: 5px;
+  transform: scale(1.0); /* Slightly larger */
   cursor: pointer;
 }
